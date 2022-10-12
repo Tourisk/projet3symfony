@@ -5,39 +5,29 @@ namespace App\Form;
 use App\Entity\Membre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
-class RegistrationFormType extends AbstractType
+class AdminFormMembreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', TextType::class, [
-                'label'=> 'Pseudo'
-            ])
-            ->add('nom', TextType::class, [
-                'label'=> 'Nom'
-            ])
-            ->add('prenom', TextType::class, [
-                'label'=> 'Prénom'
-            ])
             ->add('email', TextType::class, [
                 'label'=> 'E-mail'
             ])
-            ->add('civilite', ChoiceType::class, [
-                'choices' => [
-                    'Monsieur'=> "M",
-                    'Madame'=> "F",
-                    'Autre'=> "T"
-                ]
+            ->add('roles', ChoiceType::class, [
+                'choices'=> [
+                    'Admin'=> "ROLE_ADMIN",
+                    'Membre'=> "ROLE_USER"
+                ],
+                    'expanded'=>true,
+                    'multiple'=>true
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type'=> PasswordType::class,
@@ -47,12 +37,10 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'required' => false,
                 //mapped => false indique à symfony de ne pas vérifier dans l'entity que cette propriété existe
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez un mot de passe',
-                    ]),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit avoir au moins {{ limit }} caractères',
@@ -61,14 +49,22 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('roles', ChoiceType::class, [
-            //     'choices'=> [
-            //         'Admin'=> "ROLE_ADMIN",
-            //         'Membre'=> "ROLE_USER"
-            //     ],
-            //         'expanded'=>true,
-            //         'multiple'=>true
-            // ])
+            ->add('pseudo', TextType::class, [
+                'label'=> 'Pseudo'
+            ])
+            ->add('nom', TextType::class, [
+                'label'=> 'Nom'
+            ])
+            ->add('prenom', TextType::class, [
+                'label'=> 'Prénom'
+            ])
+            ->add('civilite', ChoiceType::class, [
+                'choices' => [
+                    'M' => 'Homme',
+                    'Mme' => 'Femme'
+                ]
+            ])
+            // ->add('date_enregistrement')
         ;
     }
 

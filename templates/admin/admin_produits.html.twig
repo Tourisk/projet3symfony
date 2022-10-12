@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Véhicules{% endblock %}
+
+{% block body %}
+  <h1>
+  BACKOFFICE - GESTION DES PRODUITS
+  {% if editMode %}
+	- Edition
+  {% else %}
+	- Vue / Ajout
+      {% endif %}
+  </h1>
+<table class="table table-bordered text-center">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Titre</th>
+    <th>Description</th>
+    <th>Couleur</th>
+    <th>Taille</th>
+    <th>Collection</th>
+    <th>Photo</th>
+    <th>Prix</th>
+    <th>Stock</th>
+    <th>Date d'enregistrement</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {% for item in produits %}
+    <tr class="align-middle">
+      <td>{{ item.id }}</td>
+      <td>{{ item.titre }}</td>
+      <td>{{ item.description|raw }}</td>
+      {% if item.couleur == "Autre" %}
+        <td>Autre</td>
+      {% else %}
+        <td style="background-color:{{ item.couleur}}"></td>
+      {% endif %}
+      <td>{{ item.taille }}</td>
+      <td>{{ item.collection }}</td>
+      <td><img src="{{ item.photo }}" alt="" style="width: 150px"></td>
+      <td>{{ item.getPrix }} €</td>
+      <td>{{ item.stock }}</td>
+      <td>{{ item.getDateEnregistrement|date('d/m/Y à H:i:s') }}</td>
+      <td>
+        {# <a href="#" class="text-dark" style=" text-decoration:none">
+          <i class='fas fa-search' style='font-size:24px'></i>
+        </a> #}
+        <a href=" {{ path('admin_edit_produit', {id: item.id}) }} " class="text-dark" style=" text-decoration:none">
+          <i class='fas fa-edit' style='font-size:24px'></i>
+        </a>
+        <a onclick="return confirm('Voulez-vous supprimer ce véhicule ?')" href="{{ path('admin_delete_produit', {id: item.id}) }}" class="text-dark" style=" text-decoration:none">
+          <i class='fas fa-trash' style='font-size:24px'></i>
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+<hr>
+  <div class="text-center">
+      {% if editMode %}
+	<h1 class="text-center text-warning">Edition</h1>
+      {% else %}
+	<h1 class="text-center text-info">Ajout produit</h1>
+      {% endif %}
+  </div>
+
+{{ form_start(form, {
+  attr: {novalidate: 'novalidate'
+}}) }}
+  <div class="row container">
+    <div class="row col-12">
+      <div class="col-6">
+      {{ form_row(form.titre, {
+        label: 'Titre'
+      }) }}
+      </div>
+     <div class="col-6">
+      {{ form_row(form.stock, {
+        label: 'Stock'
+      }) }}
+      </div>
+      <div class="col-6">
+      {{ form_row(form.couleur, {
+        label: 'Couleur'
+      }) }}
+      </div>
+      <div class="col-6">
+      {{ form_row(form.photo, {
+        label: 'Photo'
+      }) }}
+      </div>
+
+      <div class="col-6">
+      {{ form_row(form.taille, {
+        label: 'Taille'
+      }) }}
+      {{ form_row(form.collection, {
+        label: 'Collection'
+      }) }}
+      {{ form_row(form.prix, {
+        label: 'Prix'
+      }) }}
+      </div>
+      <div class="col-6">
+      {{ form_row(form.description, {
+        label: 'Description'
+      }) }}
+      </div>
+  </div>
+  <div class="text-center">
+      {% if editMode %}
+      <button type="submit" class="btn btn-warning mt-2 mb-2 col-12">
+        Enregistrer les modifications
+      </button>
+      {% else %}
+      <button type="submit" class="btn btn-info mt-2 mb-2 col-12">
+        Ajouter le produit
+      </button>
+      {% endif %}
+
+  </div>
+{{ form_end(form) }}
+
+{% endblock %}

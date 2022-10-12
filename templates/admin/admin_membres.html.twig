@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Véhicules{% endblock %}
+
+{% block body %}
+  <h1>
+  BACKOFFICE - GESTION DES MEMBRES
+  {% if editMode %}
+	- Edition
+  {% else %}
+	- Vue / Ajout
+      {% endif %}
+  </h1>
+
+<table class="table table-bordered text-center">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Pseudo</th>
+    <th>E-mail</th>
+    <th>Civilité</th>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Statut</th>
+    <th>Date d'enregistrement</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {% for membre in membres %}
+    <tr class="align-middle">
+      <td>{{ membre.id }}</td>
+      <td>{{ membre.pseudo }}</td>
+      <td>{{ membre.email }}</td>
+      <td>{{ membre.civilite }}</td>
+      <td>{{ membre.nom }}</td>
+      <td>{{ membre.prenom }}</td>
+      <td>
+      {% for role in membre.roles %}
+          {{ role }}<br>
+      {% endfor %}
+      </td>
+      <td>{{ membre.getDateEnregistrement|date('d/m/Y à H:i:s') }}</td>
+      <td>
+        {# <a href="#" class="text-dark" style=" text-decoration:none">
+          <i class='fas fa-search' style='font-size:24px'></i>
+        </a> #}
+        <a href=" {{ path('admin_edit_membre', {id: membre.id}) }} " class="text-dark" style=" text-decoration:none">
+          <i class='fas fa-edit' style='font-size:24px'></i>
+        </a>
+        <a onclick="return confirm('Voulez-vous supprimer ce véhicule ?')" href="{{ path('admin_delete_membre', {id: membre.id}) }}" class="text-dark" style=" text-decoration:none">
+          <i class='fas fa-trash' style='font-size:24px'></i>
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+<hr>
+  <div class="text-center">
+      {% if editMode %}
+	<h1 class="text-center text-warning">Edition</h1>
+      {% else %}
+	<h1 class="text-center text-info">Ajout Membre</h1>
+      {% endif %}
+  </div>
+
+{{ form_start(form, {
+  attr: {novalidate: 'novalidate'
+}}) }}
+  <div class="container">
+    <div class="row col-12">
+      <div class="col">
+      {{ form_row(form.pseudo, {
+        label: 'Pseudo'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.nom, {
+        label: 'Nom'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.prenom, {
+        label: 'Prénom'
+      }) }}
+      </div>
+    <div class="row col-12">
+    <div class="col">
+      {{ form_row(form.email, {
+        label: 'E-mail'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.civilite, {
+        label: 'Civilité'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.roles, {
+        label: 'Statut'
+      }) }}
+      </div>
+    </div>
+      <div class="col-12">
+      {{ form_row(form.plainPassword) }}
+      </div>
+  </div>
+  <div class="text-center">
+      {% if editMode %}
+      <button type="submit" class="btn btn-warning mt-2 mb-2 col-12">
+        Enregistrer les modifications
+      </button>
+      {% else %}
+      <button type="submit" class="btn btn-info mt-2 mb-2 col-12">
+        Ajouter le membre
+      </button>
+      {% endif %}
+
+  </div>
+{{ form_end(form) }}
+
+{% endblock %}
