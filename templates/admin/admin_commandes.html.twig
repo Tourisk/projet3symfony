@@ -13,9 +13,7 @@
       {% endif %}
   </h1>
 
-	{# <a href="{{ path('admin_crud_commandes_new') }}" class="btn btn-success my-3">Ajouter une commande</a> #}
-
-	<table class="table table-bordered text-center">
+	<table class="table table-bordered text-center" style="background-color:#E1DFDE">
 		<thead>
 			<tr>
         <th>Commande</th>
@@ -61,7 +59,7 @@
       {% endif %}
   </div>
 	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-  <div class="container">
+  <div class="container pb-5">
     <div class="row col-12">
       <div class="col-6">
       {{ form_row(form.membre) }}

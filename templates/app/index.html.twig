@@ -1,7 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AppController!{% endblock %}
+{% block title %}MyShop{% endblock %}
 
 {% block body %}
+
+<section class="row articles">
+{% for show in produits %}
+<article class="col-md-6 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1" style="background-color:#E1DFDE">
+      <h2>{{ show.titre }}</h2>
+  <div class="row justify-content-center">
+    <div class="col-3">
+        <img class="img-fluid" src="{{ show.photo }}" alt="" width="250px">
+    </div>
+    <div class="col-5">
+      <div class="metadata">
+        Ajouté le {{ show.getDateEnregistrement |date('d/m/Y') }}
+        <div class="content">
+          <div class="col">
+            <b>Couleur:</b>
+            <center><div class="w-25" style="background-color:{{ show.couleur}}">-</div></center>
+          <div class="col">
+            <b>Taille:</b> {{ show.taille }}</div>
+        <div class="col">
+            <b>Collection:</b> {{ show.collection }}</div>
+        <div class="col">
+            <b>Quantité en stock:</b> {{ show.stock }}</div>
+          <div class="col">
+            <b>Prix:</b> {{ show.getPrix }} €</div>
+          <div class="col">
+            <b>Description:</b> {{ show.description|raw }}</div>
+        </div>
+      </div>
+    </div>
+    <a href="{{ path('app_produit', {id: show.id}) }}" class="btn btn-dark">Voir les détails</a>
+  </div>
+</article>
+{% endfor %}
+</section>
+
+
 
 {% endblock %}

@@ -11,7 +11,7 @@
 	- Vue / Ajout
       {% endif %}
   </h1>
-<table class="table table-bordered text-center">
+<table class="table table-bordered text-center" style="background-color:#E1DFDE">
 <thead>
   <tr>
     <th>#</th>
@@ -40,7 +40,7 @@
       {% endif %}
       <td>{{ item.taille }}</td>
       <td>{{ item.collection }}</td>
-      <td><img src="{{ item.photo }}" alt="" style="width: 150px"></td>
+      <td><img src="{{ item.photo }}" alt="" style="width: 50px"></td>
       <td>{{ item.getPrix }} €</td>
       <td>{{ item.stock }}</td>
       <td>{{ item.getDateEnregistrement|date('d/m/Y à H:i:s') }}</td>
@@ -71,7 +71,7 @@
 {{ form_start(form, {
   attr: {novalidate: 'novalidate'
 }}) }}
-  <div class="row container">
+  <div class="row container pb-5">
     <div class="row col-12">
       <div class="col-6">
       {{ form_row(form.titre, {

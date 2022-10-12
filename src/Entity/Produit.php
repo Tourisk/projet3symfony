@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -17,9 +18,11 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ doit être remplis")]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message:"Ce champ doit être remplis")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -32,12 +35,15 @@ class Produit
     private ?string $collection = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ doit être remplis")]
     private ?string $photo = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Ce champ doit être remplis")]
     private ?int $prix = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Ce champ doit être remplis")]
     private ?int $stock = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

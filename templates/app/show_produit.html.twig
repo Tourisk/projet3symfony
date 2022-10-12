@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit !{% endblock %}
+
+{% block body %}
+
+<section class="row articles">
+
+<article class="col-md-8 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1">
+      <h2>{{ produit.titre }}</h2>
+  <div class="row justify-content-center">
+    <div class="col-6">
+        <img class="img-fluid" src="{{ produit.photo }}" alt="" style="width:150px">
+    </div>
+    <div class="col-6">
+      <div class="metadata">
+        Ajouté le {{ produit.getDateEnregistrement |date('d/m/Y') }}
+        <div class="content">
+          <div class="col">
+            <b>Couleur:</b>
+            <center><div class="w-25" style="background-color:{{ produit.couleur}}">-</div></center></div>
+          <div class="col">
+            <b>Taille:</b> {{ produit.taille }}</div>
+          <div class="col">
+            <b>Collection:</b> {{ produit.collection }}</div>
+          <div class="col">
+            <b>Prix:</b> {{ produit.getPrix }} €</div>
+          <div class="col">
+            <b>Stock:</b> {{ produit.stock }}</div>
+          <div class="col">
+            <b>Description:</b><br> {{ produit.description|raw }}</div>
+        </div>
+      </div>
+    </div><hr>
+  {% if app.user %}
+  <div class="row justify-content-center">
+    <a href="{{ path('cart_add', {id:produit.id}) }}">
+      <button type="submit" class="btn btn-success col-6 mt-3">Ajouter au panier</button>
+    </a>
+  </div>
+  {% else %}
+    <a href="{{ path('app_login') }}">Cliquez ici</a> pour vous connecter et commander.
+  {% endif %}
+
+  </div>
+</article>
+
+</section>
+
+{% endblock %}

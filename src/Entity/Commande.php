@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommandeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -23,6 +24,7 @@ class Commande
     private ?Produit $produit = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?int $quantite = null;
 
     #[ORM\Column]

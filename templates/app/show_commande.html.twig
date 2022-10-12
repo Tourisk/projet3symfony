@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin commandes{% endblock %}
+
+{% block body %}
+
+<section class="container text-center">
+  <div class="row">
+  <p>
+    <b>Commande N° </b> {{ commande.id }}
+  </p>
+  <p>
+    <b>Montant de la commande: </b> {{ commande.montant }} €<br>
+    <b>Etat de la commande: </b> {{ commande.etat }}<br>
+    <b>Date de la commande: </b> {{ commande.dateEnregistrement|date('d/m/Y') }}<br>
+  </p>
+  </div>
+    <a href="{{ path('app_profil', {id:commande.id}) }}">
+      <button type="submit" class="btn btn-success col-6 mt-3">Retourner à l'historique des commandes</button>
+    </a>  
+  </div>
+</section>
+{% endblock %}
