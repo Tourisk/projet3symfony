@@ -91,7 +91,7 @@ public function adminFormMembre(MembreRepository $repo, Request $globals, Entity
         if(!$membre->getId() && $form->get('plainPassword')->getData() == null)
         {
             $this->addFlash('danger', "Un nouveau membre doit avoir un mot de passe.");
-            return $this->redirectToRoute('admin_crud_membres_new');
+            return $this->redirectToRoute('admin_new_membre');
             // je renvoie une erreur
         }
 
