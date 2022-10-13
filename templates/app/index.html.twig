@@ -26,7 +26,7 @@
         <div class="col">
             <b>Quantité en stock:</b> {{ show.stock }}</div>
           <div class="col">
-            <b>Prix:</b> {{ show.getPrix }} €</div>
+            <b>Prix:</b> {{ show.getPrix|number_format(2) }} €</div>
           <div class="col">
             <b>Description:</b> {{ show.description|raw }}</div>
         </div>

@@ -33,7 +33,7 @@
 					<td>{{ data.membre.pseudo }}</td>
 					<td>{{ data.produit.titre }}</td>
 					<td>{{ data.quantite }}</td>
-					<td>{{ data.montant }} €</td>
+					<td>{{ data.montant|number_format(2) }} €</td>
 					<td>{{ data.etat }}</td>
 					<td>{{ data.dateEnregistrement|date('d/m/Y à H:i:s') }}</td>
 					<td>

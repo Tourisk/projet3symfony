@@ -22,9 +22,9 @@
         <td>{{ item.dateEnregistrement|date('d/m/Y à H:i:s') }}</td>
         <td>{{ item.montant|number_format(2) }} €</td>
         <td>
-        		<a href="{{ path('app_commande', {id: item.id}) }}" class="text-dark">
-							<i class="fas fa-search fa-lg"></i>
-						</a>
+        	<a href="{{ path('app_commande', {id: item.id}) }}" class="text-dark">
+				<i class="fas fa-search fa-lg"></i>
+			</a>
         </td>
     </tr>
 {% endfor %}

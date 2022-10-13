@@ -24,7 +24,7 @@
           <div class="col">
             <b>Collection:</b> {{ produit.collection }}</div>
           <div class="col">
-            <b>Prix:</b> {{ produit.getPrix }} €</div>
+            <b>Prix:</b> {{ produit.getPrix|number_format(2) }} €</div>
           <div class="col">
             <b>Stock:</b> {{ produit.stock }}</div>
           <div class="col">
