@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Service\CartService;
 use App\Repository\ProduitRepository;
 use App\Repository\CommandeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,5 +51,30 @@ public function showCommande($id, CommandeRepository $repo)
     ]);
 }
 //---------------------------------------------------------------------------------------------------------------------------------------
+#[Route('/commande', name: 'app_cart_commande')]
+public function cartCommande(CartService $cs, EntityManagerInterface $manager)
+{
+    $cartWithData=$cs->getCardWithData();
 
+        foreach ($cartWithData as $produits) {
+            $commande=new Commande;
+            $prix=$produits['quantite'] * $produits['produit']->getPrix();
+            $commande->setDateEnregistrement(new \DateTime);
+            $commande->setQuantite($produits['quantite']);
+            $commande->setMontant($prix);
+            $commande->setEtat('En cours de traitement');
+            $commande->setProduit($produits['produit']);
+            $commande->setMembre($this->getUser());
+            $stock=$produits['produit']->getStock();
+            $stock-=$produits['quantite'];
+            $produits['produit']->setStock($stock);
+            $manager->persist($commande);
+            $manager->flush();
+            $cs->remove($produits['produit']->getId());
+        }
+
+        $this->addFlash('success', 'La commande à bien été passé !');
+        return $this->redirectToRoute('app_profil');
+}
+//---------------------------------------------------------------------------------------------------------------------------------------
 }
